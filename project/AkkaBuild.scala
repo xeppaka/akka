@@ -26,8 +26,12 @@ object AkkaBuild {
     organization := "com.typesafe.akka",
     Dependencies.Versions,
     // use the same value as in the build scope
+    // TODO #26675 this can be removed once we use sbt-dynver instead of timestamps
+    // everywhere
     version := (version in ThisBuild).value)
 
+  // TODO #26675 this can be removed once we use sbt-dynver instead of timestamps
+  // everywhere
   lazy val currentDateTime = {
     // storing the first accessed timestamp in system property so that it will be the
     // same when build is reloaded or when using `+`.
@@ -38,6 +42,8 @@ object AkkaBuild {
         .format(ZonedDateTime.now(ZoneOffset.UTC)))
   }
 
+  // TODO #26675 this can be removed once we use sbt-dynver instead of timestamps
+  // everywhere
   def akkaVersion: String = {
     val default = "2.6-SNAPSHOT"
     sys.props.getOrElse("akka.build.version", default) match {
@@ -47,6 +53,8 @@ object AkkaBuild {
     }
   }
 
+  // TODO #26675 this can be removed once we use sbt-dynver instead of timestamps
+  // everywhere
   def akkaVersionFromFile(default: String): String = {
     val versionFile = "akka-actor/target/classes/version.conf"
     if (new File(versionFile).exists()) {
@@ -63,7 +71,6 @@ object AkkaBuild {
     UnidocRoot.akkaSettings,
     Protobuf.settings,
     parallelExecution in GlobalScope := System.getProperty("akka.parallelExecution", parallelExecutionByDefault.toString).toBoolean,
-      version in ThisBuild := akkaVersion
   )
 
   lazy val mayChangeSettings = Seq(
