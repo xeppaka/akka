@@ -588,7 +588,7 @@ public class PersistentActorJavaDslTest extends JUnitSuite {
   }
 
   // event-wrapper
-  public static class Wrapper<T> {
+  public static class Wrapper<T> implements Serializable {
     private final T t;
 
     public Wrapper(T t) {
@@ -597,6 +597,21 @@ public class PersistentActorJavaDslTest extends JUnitSuite {
 
     public T getT() {
       return t;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+
+      Wrapper<?> wrapper = (Wrapper<?>) o;
+
+      return t.equals(wrapper.t);
+    }
+
+    @Override
+    public int hashCode() {
+      return t.hashCode();
     }
   }
 

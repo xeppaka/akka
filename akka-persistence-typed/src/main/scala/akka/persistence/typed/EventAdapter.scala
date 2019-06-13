@@ -81,7 +81,7 @@ object EventSeq {
 
   /** Java API */
   final def create[A](events: java.util.List[A]): EventSeq[A] = {
-    import scala.collection.JavaConverters._
+    import akka.util.ccompat.JavaConverters._
     EventsSeq(events.asScala.toList)
   }
 
