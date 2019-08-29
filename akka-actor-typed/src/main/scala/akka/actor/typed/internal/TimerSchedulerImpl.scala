@@ -8,9 +8,7 @@ package internal
 import java.time.Duration
 
 import scala.concurrent.duration.FiniteDuration
-
-import akka.actor.Cancellable
-import akka.actor.NotInfluenceReceiveTimeout
+import akka.actor.{Cancellable, NoSerializationVerificationNeeded, NotInfluenceReceiveTimeout}
 import akka.actor.typed.scaladsl.ActorContext
 import akka.annotation.InternalApi
 import akka.dispatch.ExecutionContexts
@@ -22,7 +20,7 @@ import akka.util.OptionVal
  */
 @InternalApi private[akka] object TimerSchedulerImpl {
   final case class Timer[T](key: Any, msg: T, repeat: Boolean, generation: Int, task: Cancellable)
-  sealed class TimerMsg(val key: Any, val generation: Int, val owner: AnyRef) {
+  sealed class TimerMsg(val key: Any, val generation: Int, val owner: AnyRef) extends NoSerializationVerificationNeeded {
     override def toString = s"TimerMsg(key=$key, generation=$generation, owner=$owner)"
   }
 

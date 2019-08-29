@@ -1,4 +1,5 @@
-import akka.{ AutomaticModuleName, CopyrightHeaderForBuild, CrossJava, ParadoxSupport, ScalafixIgnoreFilePlugin }
+import akka.CrossJava.Keys.javaHomes
+import akka.{AutomaticModuleName, CopyrightHeaderForBuild, CopyrightHeaderInPr, CrossJava, ParadoxSupport, ScalafixIgnoreFilePlugin}
 
 enablePlugins(
   UnidocRoot,

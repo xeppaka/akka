@@ -190,14 +190,17 @@ object CrossJava {
   private val oneDot = Map((1L to 20L).toVector.flatMap { i =>
     Vector(Vector(i) -> Vector(1L, i), Vector(1L, i) -> Vector(i))
   }: _*)
-  def expandJavaHomes(hs: Map[String, File]): Map[String, File] =
+  def expandJavaHomes(hs: Map[String, File]): Map[String, File] = {
     hs.flatMap {
       case (k, v) =>
         val jv = JavaVersion(k)
-        if (oneDot.contains(jv.numbers))
+        val result = if (oneDot.contains(jv.numbers))
           Vector(k -> v, jv.withNumbers(oneDot(jv.numbers)).toString -> v)
         else Vector(k -> v)
+
+        result
     }
+  }
 
   def wrapNull(a: Array[String]): Vector[String] =
     if (a eq null) Vector()
